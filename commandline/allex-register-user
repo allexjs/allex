@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+var execlib = require('..');
+
+execlib.loadDependencies('client', ['allex:master'], run);
+
+function run () {
+  execlib.execSuite.taskRegistry.run('findMasterPid', {
+    cb: go
+  });
+}
+
+function go (pid) {
+  execlib.execSuite.taskRegistry.run('findAndRun', {
+    masterpid: pid,
+    program: {
+      sinkname: execlib.execSuite.sinkNameFromString(process.argv[2]),
+      identity: {name: 'user', role: 'user'},
+      task: {
+        name: doRegisterUser
+      }
+    }
+  });
+}
+
+function onSuccess (result) {
+  console.log('registerUser for '+process.argv[3]+' with password '+process.argv[5]+' and role '+process.argv[4]+' succeeded', result);
+  process.exit(0);
+}
+
+function onFail (reason) {
+  console.log('registerUser for '+process.argv[3]+' with password '+process.argv[5]+' and role '+process.argv[4]+' failed', reason);
+  process.exit(1);
+}
+
+function doRegisterUser(taskobj) {
+  if (!(taskobj && taskobj.sink)) {
+    console.error('sink could not be found for', process.argv[2]);
+    return;
+  }
+  //TODO: neka ga za sad ovako: password, username ... procitaj iz namecolumn iz needs-a i passwordcolumn ...
+  //execlib.lib.qlib.promise2console(taskobj.sink.call('registerUser', {username: process.argv[3], role: process.argv[4], password:process.argv[5]}), 'registerUser for '+process.argv[3]+' with password '+process.argv[5]+' and role '+process.argv[4]);
+  taskobj.sink.call('registerUser', {username: process.argv[3], role: process.argv[4], password:process.argv[5]}).then(
+    onSuccess,
+    onFail
+  );
+}

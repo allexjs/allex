@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+var lib = require('allexlib'),
+  Fs = require('allex_nodehelpersserverruntimelib')(lib).Fs,
+  Path = require('path'),
+  filename = process.argv[2],
+  fieldname = process.argv[3],
+  fieldvalue = process.argv[4],
+  tmpobj;
+
+try {
+  fieldvalue = JSON.parse(fieldvalue);
+} catch (ignore) { }
+
+if (!Fs.fileExists(filename)) {
+  Fs.ensureDirSync(Path.dirname(filename));
+  tmpobj = {};
+  tmpobj[fieldname] = fieldvalue;
+  Fs.writeJSONSync(filename, tmpobj);
+} else {
+  Fs.writeFieldToJSONFile2(filename, fieldname, fieldvalue);
+}

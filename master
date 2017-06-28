@@ -1,0 +1,34 @@
+#!/bin/bash
+function show_help {
+  cat << ENDHELP
+Usage allexmaster [OPTIONS]
+Options:
+  -d: start in debug regime
+  -b: start in debug-brk regime
+  -h: displays help
+ENDHELP
+  exit
+}
+
+. allex-shell-bsfl
+arg=''
+while getopts "dbh" opt; do
+  case $opt in
+  h)
+    show_help
+    ;;
+  \?)
+    show_help
+    ;;
+  d)
+    arg=' --debug'
+    ;;
+  b)
+    arg=' --debug-brk'
+    ;;
+  esac
+done
+
+
+ROOT=$(allex-bash-realpath "$BASH_SOURCE" ./)
+run_JS "$ROOT/master.js" $arg

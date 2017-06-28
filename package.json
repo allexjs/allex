@@ -1,0 +1,38 @@
+{
+  "name": "allex",
+  "version": "1.0.0",
+  "description": "AllexJS Runtime",
+  "main": "index.js",
+  "bin": {
+    "allexlanmanager": "./lanmanager.js",
+    "allexmaster": "./master.js",
+    "allexrun": "./run.js",
+    "allexruntask": "./commandline/allexruntask.js",
+    "allexenterandruntask": "./commandline/allexenterandruntask.js",
+    "allexrunapp": "./commandline/allexrunapp.js",
+    "allex-force-password": "./commandline/allex-force-password",
+    "allex-register-user": "./commandline/allex-register-user",
+    "allex-set-field-tojson": "./commandline/allex-set-field-tojson"
+  },
+  "dependencies": {
+    "allexlib": "2.x",
+    "allex_servercore": "1.x",
+    "allex_singletonprogramstarttool": "1.x",
+    "allex_npminstallserverruntimelib": "1.x",
+    "allex_temppipedirserverruntimelib": "1.x",
+    "allex_nodehelpersserverruntimelib": "1.x",
+    "allex_unixsocketcleanerserverruntimelib": "1.x",
+    "bufferutil": "3.x",
+    "utf-8-validate": "3.x",
+    "allex_wslib": "1.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.hers.rs:allex/allex.git"
+  },
+  "keywords": [
+    "AllexJS"
+  ],
+  "author": "HERS Belgrade",
+  "license": "ISC"
+}

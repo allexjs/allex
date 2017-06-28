@@ -1,0 +1,10 @@
+.allexnpminstaller
+MachineManager.pid
+node_modules/*
+scripts/node_modules/*
+*.swp
+*.swo
+web_component/bower_components/*
+web_component/_generated/*
+web_component/node_modules/*
+*.log
