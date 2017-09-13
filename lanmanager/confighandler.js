@@ -50,7 +50,8 @@ function createConfigHandler(execlib, rootpath){
     //this.getBoot(this._onBoot.bind(this,cb,ret));
     q.all([
       this.fetch(ret, 'boot', 'boot', {
-        portcorrection: 0
+        portcorrection: 0,
+        httpmonitorport: 0
       }, docreate),
       this.fetch(ret, 'nat', 'nat', [{
         iaddress: '192.168.1.1',

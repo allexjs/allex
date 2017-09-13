@@ -42,6 +42,9 @@ function runLanManager(execlib) {
       if (rtconf.nat) {
         conf.nat = rtconf.nat;
       }
+      if (rtconf.boot) {
+        lib.extend(conf.boot, rtconf.boot);
+      }
     }
     run(conf);
   }
