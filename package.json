@@ -23,7 +23,7 @@
     "allex_nodehelpersserverruntimelib": "1.x",
     "allex_unixsocketcleanerserverruntimelib": "1.x",
     "bufferutil": "3.x",
-    "utf-8-validate": "3.x",
+    "utf-8-validate": "4.x",
     "allex_wslib": "1.x"
   },
   "repository": {
