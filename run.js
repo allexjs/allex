@@ -9,7 +9,7 @@ console.log = function(){
 */
 
 var Path = require('path'),
- pathtoscript = Path.resolve(__dirname, Path.join(process.cwd(),process.argv[2])),
+ pathtoscript = Path.isAbsolute(process.argv[2]) ? process.argv[2] : Path.resolve(__dirname, Path.join(process.cwd(),process.argv[2])),
  execlib = require('./');
 
 execlib.lib.initUid().then(go);
