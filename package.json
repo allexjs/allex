@@ -1,6 +1,6 @@
 {
   "name": "allex",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "AllexJS Runtime",
   "main": "index.js",
   "bin": {
@@ -15,7 +15,7 @@
     "allex-set-field-tojson": "./commandline/allex-set-field-tojson"
   },
   "dependencies": {
-    "allexlib": "2.x",
+    "allexlib": "3.x",
     "allex_servercore": "1.x",
     "allex_singletonprogramstarttool": "2.x",
     "allex_npminstallserverruntimelib": "1.x",
