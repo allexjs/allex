@@ -1,6 +1,6 @@
 {
   "name": "allex",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "AllexJS Runtime",
   "main": "index.js",
   "bin": {
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "allexlib": "3.x",
-    "allex_servercore": "1.x",
+    "allex_servercore": "2.x",
     "allex_singletonprogramstarttool": "2.x",
     "allex_npminstallserverruntimelib": "1.x",
     "allex_temppipedirserverruntimelib": "1.x",
