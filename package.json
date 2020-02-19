@@ -1,6 +1,6 @@
 {
   "name": "allex",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "AllexJS Runtime",
   "main": "index.js",
   "bin": {
@@ -22,8 +22,8 @@
     "allex_temppipedirserverruntimelib": "1.x",
     "allex_nodehelpersserverruntimelib": "1.x",
     "allex_unixsocketcleanerserverruntimelib": "1.x",
-    "bufferutil": "3.x",
-    "utf-8-validate": "4.x",
+    "bufferutil": "4.x",
+    "utf-8-validate": "5.x",
     "allex_wslib": "1.x"
   },
   "repository": {
