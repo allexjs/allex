@@ -6,7 +6,16 @@ function runLanManager(execlib) {
     execSuite = execlib.execSuite,
     registry = execSuite.registry,
     libRegistry = execSuite.libRegistry,
-    taskRegistry = execSuite.taskRegistry;
+    taskRegistry = execSuite.taskRegistry,
+    lanmansink = null;
+
+  process.on('SIGINT', function () {
+    if (lanmansink) {
+      //console.log('destroying lanmansink');
+      lanmansink.destroy();
+    }
+    lanmansink = null;
+  });
 
   execlib.serverLoggingSetup();
 
@@ -56,6 +65,7 @@ function runLanManager(execlib) {
   }
 
   function onStarted(sink){
+    lanmansink = sink;
   }
 
   function start(conf){

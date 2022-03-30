@@ -17,7 +17,8 @@ var pe = process.exit,
   net = require('net'),
   lib = execlib.lib,
   q = lib.q,
-  tmpPipeDir = require('allex_temppipedirserverruntimelib');
+  tmpPipeDir = require('allex_temppipedirserverruntimelib'),
+  MasterRunner = require('./masterlib')(execlib);
 
 process.exit = function () {
   console.trace();
@@ -67,10 +68,13 @@ singleton('allexmaster',process.cwd(),start,checkForAllexMaster);
 function start(){
   var confighandler = require('./lib/confighandler')(),
     config = confighandler(),
-    rtconfig = null;
+    rtconfig = null,
+    masterrunner = null;
   if (config.runtimedirectory) {
     rtconfig = confighandler(config.runtimedirectory);
   }
-  require('./lib/runner')(config,rtconfig)();
+  //require('./lib/runner')(config,rtconfig)();
+  masterrunner = new MasterRunner(config, rtconfig);
+  masterrunner.go();
 }
 

@@ -5,6 +5,13 @@ var execlib = require('..');
 execlib.loadDependencies('client', ['allex:master'], run);
 
 function run () {
+  execlib.lib.initUid().then(
+   init,
+   process.exit.bind(process, 1)
+  );
+}
+
+function init() {
   execlib.execSuite.taskRegistry.run('findMasterPid', {
     cb: go
   });
