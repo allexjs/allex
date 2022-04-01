@@ -9,13 +9,15 @@ function runLanManager(execlib) {
     taskRegistry = execSuite.taskRegistry,
     lanmansink = null;
 
-  process.on('SIGINT', function () {
+  function killer () {
     if (lanmansink) {
       //console.log('destroying lanmansink');
       lanmansink.destroy();
     }
     lanmansink = null;
-  });
+  }
+  process.on('SIGINT', killer);
+  process.on('SIGTERM', killer);
 
   execlib.serverLoggingSetup();
 

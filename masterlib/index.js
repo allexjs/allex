@@ -31,6 +31,7 @@ function createMasterRunner (execlib) {
     this.lanManagerPort = 0;
     this.machineManagerPorts = execSuite.machineManagerPorts.map(machinePortMakeup);
     this.lanManagerAvailable = new lib.HookCollection();
+    this.masterSink = null;
     this.masterMonitor = null;
     this.availableServicesSink = null;
     this.natSink = null;
@@ -43,6 +44,40 @@ function createMasterRunner (execlib) {
       this.lanManagerPort += this.config.lanmanagerportcorrection;
     }
   }
+  MasterRunner.prototype.destroy = function () {
+    //first of all, null the config, it's the "alive detector"
+    this.config = null;
+    this.lanManagerPort = null;
+    this.lanManagerProtocolName = null;
+    if (this.lmSink) {
+      this.lmSink.destroy();
+    }
+    this.lmSink = null;
+    if (this.natSink) {
+      this.natSink.destroy();
+    }
+    this.natSink = null;
+    if (this.availableServicesSink) {
+      this.availableServicesSink.destroy();
+    }
+    this.availableServicesSink = null;
+    if (this.masterMonitor) {
+      this.masterMonitor.destroy();
+    }
+    this.masterMonitor = null;
+    if (this.masterSink) {
+      this.masterSink.destroy();
+    }
+    this.masterSink = null;
+    if (this.lanManagerAvailable) {
+      this.lanManagerAvailable.destroy();
+    }
+    this.lanManagerAvailable = null;
+    this.machineManagerPorts = null;
+    this.lanManagerPort = null;
+    this.lanManagerProtocolName = null;
+    this.config = null; //for academic reasons, null it again
+  };
   MasterRunner.prototype.reset = function () {
 
   };
@@ -50,6 +85,10 @@ function createMasterRunner (execlib) {
     lib.initUid().then(this.startMaster.bind(this));
   };
   MasterRunner.prototype.startMaster = function () {
+    if (!this.config) {
+      this.destroy();
+      return;
+    }
     execSuite.start({
       service:{
         modulename:'allex_masterservice',
@@ -66,6 +105,7 @@ function createMasterRunner (execlib) {
       this.rego();
       return;
     }
+    this.masterSink = mastersink;
     mastersink.destroyed.attachForSingleShot(this.rego.bind(this));
     (new jobslib.InitialMasterSink(availablelanservicepipename, natpipename, mastersink)).go().then(
       this.onMasterInitialized.bind(this),
@@ -77,6 +117,9 @@ function createMasterRunner (execlib) {
     this.rego();
   };
   MasterRunner.prototype.rego = function () {
+    if (!this.config) {
+      return;
+    }
     console.log('Will retry in a second');
     lib.runNext(this.go.bind(this), lib.intervals.Second);
   };

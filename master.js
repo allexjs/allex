@@ -18,12 +18,21 @@ var pe = process.exit,
   lib = execlib.lib,
   q = lib.q,
   tmpPipeDir = require('allex_temppipedirserverruntimelib'),
-  MasterRunner = require('./masterlib')(execlib);
+  MasterRunner = require('./masterlib')(execlib),
+  masterrunner = null;
 
 process.exit = function () {
   console.trace();
   pe.apply(process, arguments);
 }
+function killer () {
+  if (masterrunner) {
+    masterrunner.destroy();
+  }
+  masterrunner = null;
+}
+process.on('SIGTERM', killer);
+process.on('SIGINT', killer);
 
 function onConnected (defer, socket, pid) {
   if (!socket) {
@@ -68,12 +77,14 @@ singleton('allexmaster',process.cwd(),start,checkForAllexMaster);
 function start(){
   var confighandler = require('./lib/confighandler')(),
     config = confighandler(),
-    rtconfig = null,
-    masterrunner = null;
+    rtconfig = null;
   if (config.runtimedirectory) {
     rtconfig = confighandler(config.runtimedirectory);
   }
   //require('./lib/runner')(config,rtconfig)();
+  if (masterrunner) {
+    masterrunner.destroy();
+  }
   masterrunner = new MasterRunner(config, rtconfig);
   masterrunner.go();
 }
