@@ -153,6 +153,9 @@ function createMasterRunner (execlib) {
     );
   };
   MasterRunner.prototype.resetOnLMSink = function () {
+    if (!this.config) {
+      return lib.q.reject(new lib.Error('ALREADY_DESTROYED'));
+    }
     return (new jobslib.AvailableServiceResetter(
       this.availableServicesSink,
       this.config.lanmanageraddress,
@@ -160,7 +163,12 @@ function createMasterRunner (execlib) {
       )).go();
   };
   MasterRunner.prototype.startLMTasks = function () {
-    var lmstate = taskRegistry.run('materializeState',{
+    var lmstate;
+    if (!(this.lmSink && this.lmSink.destroyed)) {
+      this.rego();
+      return;
+    }
+    lmstate = taskRegistry.run('materializeState',{
       sink:this.lmSink
     });
     taskRegistry.run('followLanManager',{
