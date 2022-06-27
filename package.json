@@ -1,6 +1,6 @@
 {
   "name": "allex",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "AllexJS Runtime",
   "main": "index.js",
   "bin": {

@@ -1,5 +1,5 @@
 var Path = require('path');
-var unixsocketcleaner = require('allex_unixsocketcleanerserverruntimelib');
+
 var tmpPipeDir = require('allex_temppipedirserverruntimelib');
 var availablelanservicepipename = Path.join(tmpPipeDir(), 'availablelanservices.'+process.pid);
 var natpipename = Path.join(tmpPipeDir(), 'nat.'+process.pid);
@@ -9,6 +9,7 @@ function createMasterRunner (execlib) {
 
   var execSuite = execlib.execSuite,  
     lib = execlib.lib,
+    unixsocketcleaner = require('allex_unixsocketcleanerserverruntimelib')(lib),
     taskRegistry = execSuite.taskRegistry,
     jobslib = require('./jobs')(execlib),
     install = require('allex_npminstallserverruntimelib')(lib);
