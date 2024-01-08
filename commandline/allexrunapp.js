@@ -12,6 +12,8 @@ var Path1 = require('path'),
 
 var cwd = process.cwd(), tempcwd = cwd;
 
+require('../clilib')(lib).setExitHandler();
+
 execlib.loadDependencies('client', ['.', 'allex:environment:lib', 'allex:blessed:lib'], parseProgram);
 function parseProgram(rootpack, envlib, blessedlib){
   var environments, appdescriptor;

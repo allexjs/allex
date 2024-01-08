@@ -143,6 +143,7 @@ function createMasterRunner (execlib) {
   };
   MasterRunner.prototype.onLMSink = function (lmsink){
     if (lmsink == null) {
+      this.lanManagerAvailable.fire(null);
       this.resetOnLMSink();
       return;
     }
@@ -184,6 +185,7 @@ function createMasterRunner (execlib) {
         install(cb,e);
       }
     });
+    this.lanManagerAvailable.fire(this.lmSink);
   };
 
   return MasterRunner;

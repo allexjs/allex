@@ -9,6 +9,8 @@ var Path1 = require('path'),
   registry = Suite.registry,
   taskRegistry = Suite.taskRegistry;
 
+require('../clilib')(lib).setExitHandler();
+
 var programname = process.argv[2], allexmasterpidcontents, cwd = process.cwd(), tempcwd = cwd;
 
 registry.registerClientSide('.').then(
